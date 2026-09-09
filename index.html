@@ -971,131 +971,225 @@
         }
 
 
-        /* ── CATEGORY HOME VIEW */
+        /* ── CATEGORY GALLERY v2 */
         #categoryHomeView {
-            padding: 2rem 1.5rem 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
             display: none;
+            min-height: 100vh;
+            background: var(--bg);
         }
         #categoryHomeView.active { display: block; }
-        .cat-home-title {
+
+        .cat-gallery-header {
             text-align: center;
-            font-size: 1.05rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
+            padding: 2.8rem 1.5rem 2rem;
+        }
+        .cat-gallery-header h1 {
+            font-size: 1.3rem;
+            font-weight: 900;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text);
+            margin: 0 0 0.5rem 0;
+        }
+        .cat-gallery-header p {
+            font-size: 0.8rem;
             color: var(--text-muted);
             text-transform: uppercase;
-            margin-bottom: 0.5rem;
+            letter-spacing: 0.06em;
+            margin: 0;
         }
-        .cat-home-subtitle {
-            text-align: center;
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            opacity: 0.7;
-        }
+
+        /* Grid principal — 3 colunas no desktop */
         .cat-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-            gap: 1.2rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3px;
+            padding: 0 3px 3px;
         }
+
+        /* Card individual */
         .cat-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 1.4rem 1.2rem;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
             position: relative;
+            height: 360px;
+            cursor: pointer;
             overflow: hidden;
+            background: #111;
         }
-        .cat-card::before {
+
+        /* Imagem real do equipamento (se fornecida) */
+        .cat-card-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94),
+                        filter 0.4s ease;
+            filter: brightness(0.6) saturate(0.8);
+        }
+        .cat-card:hover .cat-card-img {
+            transform: scale(1.08);
+            filter: brightness(0.75) saturate(1.1);
+        }
+
+        /* Fundo gradiente (fallback ou sempre visível) */
+        .cat-card-bg {
+            position: absolute;
+            inset: 0;
+            background: var(--cat-grad);
+            transition: opacity 0.4s;
+        }
+        .cat-card-img + .cat-card-bg { opacity: 0; }
+
+        /* Overlay gradiente escuro na base */
+        .cat-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                rgba(0,0,0,0.92) 0%,
+                rgba(0,0,0,0.5) 40%,
+                rgba(0,0,0,0.1) 70%,
+                transparent 100%
+            );
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.8rem 1.6rem;
+            transition: background 0.4s;
+        }
+        .cat-card:hover .cat-card-overlay {
+            background: linear-gradient(
+                to top,
+                rgba(0,0,0,0.96) 0%,
+                rgba(0,0,0,0.65) 50%,
+                rgba(0,0,0,0.2) 80%,
+                transparent 100%
+            );
+        }
+
+        /* Badge no topo direito */
+        .cat-card-badge {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.22);
+            border-radius: 8px;
+            padding: 0.35rem 0.65rem;
+            font-size: 0.65rem;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        /* Linha colorida no topo do card */
+        .cat-card::after {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0;
-            height: 3px;
-            background: var(--cat-color, var(--primary));
-            border-radius: 16px 16px 0 0;
+            height: 4px;
+            background: var(--cat-color);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 10;
         }
-        .cat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(0,0,0,0.18);
-            border-color: var(--cat-color, var(--primary));
-        }
-        .cat-card-header {
-            display: flex;
-            align-items: center;
-            gap: 0.7rem;
-            margin-bottom: 0.85rem;
-        }
-        .cat-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.65rem;
+        .cat-card:hover::after { opacity: 1; }
+
+        /* Nome da categoria */
+        .cat-card-name {
+            font-size: 1.1rem;
             font-weight: 900;
-            letter-spacing: 0.04em;
-            flex-shrink: 0;
-        }
-        .cat-name {
-            font-size: 0.88rem;
-            font-weight: 800;
-            letter-spacing: 0.05em;
+            color: #fff;
+            letter-spacing: 0.07em;
             text-transform: uppercase;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.7);
             line-height: 1.2;
+            margin-bottom: 0.3rem;
         }
-        .cat-count {
-            font-size: 0.72rem;
-            color: var(--text-muted);
-            margin-top: 0.1rem;
-        }
-        .cat-equip-list {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 0.9rem 0;
-            display: flex;
-            flex-direction: column;
-            gap: 0.3rem;
-        }
-        .cat-equip-list li {
-            font-size: 0.72rem;
-            color: var(--text-muted);
-            display: flex;
-            align-items: flex-start;
-            gap: 0.35rem;
-            line-height: 1.35;
-        }
-        .cat-equip-list li::before {
-            content: 'bb';
-            color: var(--cat-color, var(--primary));
-            font-weight: 900;
-            flex-shrink: 0;
-            margin-top: 0.05rem;
-            font-size: 0.9rem;
-            line-height: 1;
-        }
-        .cat-btn {
-            width: 100%;
-            padding: 0.5rem;
-            border-radius: 9px;
-            border: none;
-            background: var(--cat-bg, rgba(239,68,68,0.1));
-            color: var(--cat-color, var(--primary));
-            font-size: 0.76rem;
+
+        /* Contador de peças */
+        .cat-card-count {
+            font-size: 0.75rem;
+            color: var(--cat-color);
             font-weight: 700;
             letter-spacing: 0.06em;
             text-transform: uppercase;
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s;
+            margin-bottom: 0.9rem;
         }
-        .cat-btn:hover {
-            background: var(--cat-color, var(--primary));
+
+        /* Lista de equipamentos (aparece no hover) */
+        .cat-card-equip {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1rem 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+        }
+        .cat-card:hover .cat-card-equip {
+            max-height: 120px;
+        }
+        .cat-card-equip li {
+            font-size: 0.68rem;
+            color: rgba(255,255,255,0.75);
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            padding: 0.15rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .cat-card-equip li::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--cat-color);
+            flex-shrink: 0;
+        }
+
+        /* Botão VER PEÇAS */
+        .cat-card-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--cat-color);
             color: #fff;
+            font-size: 0.72rem;
+            font-weight: 900;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.6rem 1.3rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transform: translateY(12px);
+            opacity: 0;
+            transition: transform 0.35s ease, opacity 0.35s ease,
+                        background 0.2s, box-shadow 0.2s;
+            align-self: flex-start;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
+        .cat-card:hover .cat-card-btn {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .cat-card-btn:hover {
+            filter: brightness(1.15);
+            box-shadow: 0 6px 24px rgba(0,0,0,0.4);
+        }
+        .cat-card-btn svg {
+            width: 14px; height: 14px;
+            stroke: currentColor; fill: none;
+            stroke-width: 2.5;
+        }
+
+        /* Botão Voltar na toolbar */
         #btnBackCategories {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -1105,15 +1199,23 @@
             gap: 0.4rem;
         }
         #btnBackCategories.visible { display: flex; }
-        @media (max-width: 640px) {
-            .cat-grid { grid-template-columns: 1fr 1fr; gap: 0.7rem; }
-            .cat-card { padding: 0.9rem 0.8rem; }
-            .cat-icon { width: 34px; height: 34px; }
-            .cat-name { font-size: 0.75rem; }
-            #categoryHomeView { padding: 1rem 0.75rem 2rem; }
+
+        /* Responsivo */
+        @media (max-width: 900px) {
+            .cat-grid { grid-template-columns: repeat(2, 1fr); }
+            .cat-card { height: 300px; }
         }
-        @media (max-width: 380px) {
+        @media (max-width: 640px) {
+            .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 2px; padding: 0 2px 2px; }
+            .cat-card { height: 220px; }
+            .cat-card-name { font-size: 0.8rem; }
+            .cat-card-overlay { padding: 1rem 1rem; }
+            .cat-gallery-header { padding: 1.8rem 1rem 1.2rem; }
+            .cat-gallery-header h1 { font-size: 1rem; }
+        }
+        @media (max-width: 400px) {
             .cat-grid { grid-template-columns: 1fr; }
+            .cat-card { height: 200px; }
         }
         </style>
 </head>
@@ -1157,10 +1259,12 @@
         </div>
     </div>
 
-    <!-- TELA DE CATEGORIAS CONTRATUAIS -->
+    <!-- TELA DE CATEGORIAS v2 -->
     <div id="categoryHomeView" class="active">
-        <p class="cat-home-title">CATALOGO POR CATEGORIA CONTRATUAL</p>
-        <p class="cat-home-subtitle">Selecione uma categoria para ver as pecas disponiveis</p>
+        <div class="cat-gallery-header">
+            <h1>CATALOGO DE EQUIPAMENTOS</h1>
+            <p>Selecione um equipamento para ver as pecas disponíveis</p>
+        </div>
         <div class="cat-grid" id="catGrid"><!-- JS --></div>
     </div>
 
@@ -1497,36 +1601,42 @@ const scrollTopBtn = document.getElementById('scrollTopBtn');
 const scrollProgress = document.getElementById('scrollProgress');
 
 
-        // == METADADOS DE CATEGORIAS CONTRATUAIS ==
+        // == METADADOS DE CATEGORIAS v2 ==
         var CATEGORY_META = {
             'ESTACAO FINANCEIRA': {
                 label: 'ESTAÇÃO FINANCEIRA',
                 abbr: 'EST',
                 color: '#ef4444',
+                grad: 'linear-gradient(135deg,#7f1d1d,#ef4444)',
+                img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80',
                 dbKeys: ['ESTAÇÃO FINANCEIRA'],
                 equip: [
-                    'POSITIVO MASTER C6200 MINIPRO - PLACAS-MÃE, FONTES, MEMÓRIAS E COMPONENTES'
+                    'POSITIVO MASTER C6200 MINIPRO',
+                    'PLACAS-MÃE, FONTES, MEMÓRIAS'
                 ]
             },
             'THIN CLIENT': {
                 label: 'THIN CLIENT',
                 abbr: 'THC',
                 color: '#f97316',
+                grad: 'linear-gradient(135deg,#7c2d12,#f97316)',
+                img: 'https://images.unsplash.com/photo-1591370874773-6702e8f12fd8?w=800&q=80',
                 dbKeys: ['THIN CLIENT'],
                 equip: [
                     'LENOVO THINKCENTRE M93 / 10A4',
-                    'DIEBOLD DT9850-801/810/812/813',
-                    'INIT GREENBOX GA690',
-                    'TECNOWORLD WINBOX 1010'
+                    'DIEBOLD DT9850 (801/810/812/813)',
+                    'INIT GA690 · TECNOWORLD WINBOX 1010'
                 ]
             },
             'SCANNER': {
                 label: 'SCANNER',
                 abbr: 'SCN',
                 color: '#10b981',
+                grad: 'linear-gradient(135deg,#064e3b,#10b981)',
+                img: 'https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?w=800&q=80',
                 dbKeys: ['SCANNER'],
                 equip: [
-                    'AVISION AD215L E AN230W',
+                    'AVISION AD215L / AN230W',
                     'KODAK I2400 / I2600 / I2800',
                     'FUJITSU FI6130 / FI6140 / FI6670'
                 ]
@@ -1535,6 +1645,8 @@ const scrollProgress = document.getElementById('scrollProgress');
                 label: 'TOTEM',
                 abbr: 'TTM',
                 color: '#3b82f6',
+                grad: 'linear-gradient(135deg,#1e3a5f,#3b82f6)',
+                img: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80',
                 dbKeys: ['TOTEM'],
                 equip: [
                     'DIEBOLD TCV 3600-010',
@@ -1545,6 +1657,8 @@ const scrollProgress = document.getElementById('scrollProgress');
                 label: 'IMPRESSORA DE CHEQUES',
                 abbr: 'IMP',
                 color: '#8b5cf6',
+                grad: 'linear-gradient(135deg,#3b0764,#8b5cf6)',
+                img: 'https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=800&q=80',
                 dbKeys: ['IMPRESSORA DE CHEQUES'],
                 equip: [
                     'OKIDATA B4600 / B4600N',
@@ -1555,9 +1669,11 @@ const scrollProgress = document.getElementById('scrollProgress');
                 label: 'SERVIDORES E CENTRAIS',
                 abbr: 'SRV',
                 color: '#06b6d4',
+                grad: 'linear-gradient(135deg,#164e63,#06b6d4)',
+                img: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80',
                 dbKeys: ['SERVIDOR DE BAIXA PLATAFORMA','SERVIDOR DE MÉDIA PLATAFORMA','SERVIDOR DE BAIXA/MÉDIA PLATAFORMA','CENTRAL TELEFÔNICA'],
                 equip: [
-                    'SERVIDORES BAIXA E MÉDIA PLATAFORMA - LENOVO',
+                    'SERVIDORES BAIXA / MÉDIA PLATAFORMA - LENOVO',
                     'CENTRAIS TELEFÔNICAS ASTERISK VIRTUAL'
                 ]
             },
@@ -1565,10 +1681,11 @@ const scrollProgress = document.getElementById('scrollProgress');
                 label: 'MONITORES E OUTROS',
                 abbr: 'MON',
                 color: '#ec4899',
+                grad: 'linear-gradient(135deg,#500724,#ec4899)',
+                img: 'https://images.unsplash.com/photo-1527443224154-c4a573d18f23?w=800&q=80',
                 dbKeys: ['MONITOR DE VÍDEO - 2° MONITOR','MONITOR LFD','ATM'],
                 equip: [
-                    'MONITORES LED DIVERSAS POLEGADAS',
-                    'MONITORES LFD',
+                    'MONITORES LED / LFD',
                     'ATMS'
                 ]
             }
@@ -1585,6 +1702,7 @@ const scrollProgress = document.getElementById('scrollProgress');
             for (var ki = 0; ki < keys.length; ki++) {
                 var name = keys[ki];
                 var meta = CATEGORY_META[name];
+                // Conta pecas
                 var count = 0;
                 for (var ii = 0; ii < BASE_DATA.length; ii++) {
                     var cc = BASE_DATA[ii].categoriaContratual || '';
@@ -1592,26 +1710,35 @@ const scrollProgress = document.getElementById('scrollProgress');
                         if (cc === meta.dbKeys[di]) { count++; break; }
                     }
                 }
+                // HTML dos equipamentos
                 var equipHtml = '';
                 for (var ei = 0; ei < meta.equip.length; ei++) {
                     equipHtml += '<li>' + meta.equip[ei] + '</li>';
                 }
+                // Cria o card
                 var card = document.createElement('div');
                 card.className = 'cat-card';
-                card.style.cssText = '--cat-color:' + meta.color + ';--cat-bg:' + meta.color + '18;';
+                card.style.setProperty('--cat-color', meta.color);
+                card.style.setProperty('--cat-grad', meta.grad);
+                // Monta o innerHTML
+                var imgTag = meta.img
+                    ? '<img class="cat-card-img" src="' + meta.img + '" alt="' + meta.label + '" onerror="this.style.display=\'none\'">'
+                    : '';
                 card.innerHTML = [
-                    '<div class="cat-card-header">',
-                    '<div class="cat-icon" style="background:' + meta.color + '20;color:' + meta.color + '">' + meta.abbr + '</div>',
-                    '<div><div class="cat-name">' + meta.label + '</div><div class="cat-count">' + count + ' PECAS</div></div>',
-                    '</div>',
-                    '<ul class="cat-equip-list">' + equipHtml + '</ul>',
-                    '<button class="cat-btn">VER PECAS</button>'
+                    imgTag,
+                    '<div class="cat-card-bg" style="background:' + meta.grad + '"></div>',
+                    '<span class="cat-card-badge">' + meta.abbr + '</span>',
+                    '<div class="cat-card-overlay">',
+                    '  <div class="cat-card-name">' + meta.label + '</div>',
+                    '  <div class="cat-card-count">' + count + ' PEÇAS DISPONÍVEIS</div>',
+                    '  <ul class="cat-card-equip">' + equipHtml + '</ul>',
+                    '  <button class="cat-card-btn">',
+                    '    <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>',
+                    '    VER PEÇAS',
+                    '  </button>',
+                    '</div>'
                 ].join('');
                 (function(n) {
-                    card.querySelector('.cat-btn').addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        openCategoryFilter(n);
-                    });
                     card.addEventListener('click', function() { openCategoryFilter(n); });
                 })(name);
                 grid.appendChild(card);
