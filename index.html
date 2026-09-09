@@ -970,6 +970,151 @@
             .logo-text { font-size: 1rem; }
         }
 
+
+        /* ── CATEGORY HOME VIEW */
+        #categoryHomeView {
+            padding: 2rem 1.5rem 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: none;
+        }
+        #categoryHomeView.active { display: block; }
+        .cat-home-title {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .cat-home-subtitle {
+            text-align: center;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            opacity: 0.7;
+        }
+        .cat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 1.2rem;
+        }
+        .cat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.4rem 1.2rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .cat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--cat-color, var(--primary));
+            border-radius: 16px 16px 0 0;
+        }
+        .cat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+            border-color: var(--cat-color, var(--primary));
+        }
+        .cat-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            margin-bottom: 0.85rem;
+        }
+        .cat-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 900;
+            letter-spacing: 0.04em;
+            flex-shrink: 0;
+        }
+        .cat-name {
+            font-size: 0.88rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+        .cat-count {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 0.1rem;
+        }
+        .cat-equip-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 0.9rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        .cat-equip-list li {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.35rem;
+            line-height: 1.35;
+        }
+        .cat-equip-list li::before {
+            content: 'bb';
+            color: var(--cat-color, var(--primary));
+            font-weight: 900;
+            flex-shrink: 0;
+            margin-top: 0.05rem;
+            font-size: 0.9rem;
+            line-height: 1;
+        }
+        .cat-btn {
+            width: 100%;
+            padding: 0.5rem;
+            border-radius: 9px;
+            border: none;
+            background: var(--cat-bg, rgba(239,68,68,0.1));
+            color: var(--cat-color, var(--primary));
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .cat-btn:hover {
+            background: var(--cat-color, var(--primary));
+            color: #fff;
+        }
+        #btnBackCategories {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+            display: none;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        #btnBackCategories.visible { display: flex; }
+        @media (max-width: 640px) {
+            .cat-grid { grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+            .cat-card { padding: 0.9rem 0.8rem; }
+            .cat-icon { width: 34px; height: 34px; }
+            .cat-name { font-size: 0.75rem; }
+            #categoryHomeView { padding: 1rem 0.75rem 2rem; }
+        }
+        @media (max-width: 380px) {
+            .cat-grid { grid-template-columns: 1fr; }
+        }
         </style>
 </head>
 <body>
@@ -1012,6 +1157,13 @@
         </div>
     </div>
 
+    <!-- TELA DE CATEGORIAS CONTRATUAIS -->
+    <div id="categoryHomeView" class="active">
+        <p class="cat-home-title">CATALOGO POR CATEGORIA CONTRATUAL</p>
+        <p class="cat-home-subtitle">Selecione uma categoria para ver as pecas disponiveis</p>
+        <div class="cat-grid" id="catGrid"><!-- JS --></div>
+    </div>
+
     <div class="toolbar-wrapper">
         <div class="search-row">
             <div class="search-box">
@@ -1021,6 +1173,10 @@
             </div>
             
             <div class="filters">
+                <button class="btn" id="btnBackCategories" title="Voltar as Categorias">
+                    <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    CATEGORIAS
+                </button>
                 <select class="filter-select" id="filterContract">
                     <option value="">Todos os Contratos</option>
                 </select>
@@ -1340,6 +1496,155 @@ const toastMsg = document.getElementById('toastMsg');
 const scrollTopBtn = document.getElementById('scrollTopBtn');
 const scrollProgress = document.getElementById('scrollProgress');
 
+
+        // == METADADOS DE CATEGORIAS CONTRATUAIS ==
+        var CATEGORY_META = {
+            'ESTACAO FINANCEIRA': {
+                label: 'ESTAÇÃO FINANCEIRA',
+                abbr: 'EST',
+                color: '#ef4444',
+                dbKeys: ['ESTAÇÃO FINANCEIRA'],
+                equip: [
+                    'POSITIVO MASTER C6200 MINIPRO - PLACAS-MÃE, FONTES, MEMÓRIAS E COMPONENTES'
+                ]
+            },
+            'THIN CLIENT': {
+                label: 'THIN CLIENT',
+                abbr: 'THC',
+                color: '#f97316',
+                dbKeys: ['THIN CLIENT'],
+                equip: [
+                    'LENOVO THINKCENTRE M93 / 10A4',
+                    'DIEBOLD DT9850-801/810/812/813',
+                    'INIT GREENBOX GA690',
+                    'TECNOWORLD WINBOX 1010'
+                ]
+            },
+            'SCANNER': {
+                label: 'SCANNER',
+                abbr: 'SCN',
+                color: '#10b981',
+                dbKeys: ['SCANNER'],
+                equip: [
+                    'AVISION AD215L E AN230W',
+                    'KODAK I2400 / I2600 / I2800',
+                    'FUJITSU FI6130 / FI6140 / FI6670'
+                ]
+            },
+            'TOTEM': {
+                label: 'TOTEM',
+                abbr: 'TTM',
+                color: '#3b82f6',
+                dbKeys: ['TOTEM'],
+                equip: [
+                    'DIEBOLD TCV 3600-010',
+                    'ITAUTEC WEBWAY / 4P11 / 4A40'
+                ]
+            },
+            'IMPRESSORA DE CHEQUES': {
+                label: 'IMPRESSORA DE CHEQUES',
+                abbr: 'IMP',
+                color: '#8b5cf6',
+                dbKeys: ['IMPRESSORA DE CHEQUES'],
+                equip: [
+                    'OKIDATA B4600 / B4600N',
+                    'HP LASERJET P2055DN'
+                ]
+            },
+            'SERVIDORES E CENTRAIS': {
+                label: 'SERVIDORES E CENTRAIS',
+                abbr: 'SRV',
+                color: '#06b6d4',
+                dbKeys: ['SERVIDOR DE BAIXA PLATAFORMA','SERVIDOR DE MÉDIA PLATAFORMA','SERVIDOR DE BAIXA/MÉDIA PLATAFORMA','CENTRAL TELEFÔNICA'],
+                equip: [
+                    'SERVIDORES BAIXA E MÉDIA PLATAFORMA - LENOVO',
+                    'CENTRAIS TELEFÔNICAS ASTERISK VIRTUAL'
+                ]
+            },
+            'MONITORES E OUTROS': {
+                label: 'MONITORES E OUTROS',
+                abbr: 'MON',
+                color: '#ec4899',
+                dbKeys: ['MONITOR DE VÍDEO - 2° MONITOR','MONITOR LFD','ATM'],
+                equip: [
+                    'MONITORES LED DIVERSAS POLEGADAS',
+                    'MONITORES LFD',
+                    'ATMS'
+                ]
+            }
+        };
+
+        var activeGroupKeys = null;
+        var currentCategoryGroup = null;
+
+        function buildCategoryHome() {
+            var grid = document.getElementById('catGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+            var keys = Object.keys(CATEGORY_META);
+            for (var ki = 0; ki < keys.length; ki++) {
+                var name = keys[ki];
+                var meta = CATEGORY_META[name];
+                var count = 0;
+                for (var ii = 0; ii < BASE_DATA.length; ii++) {
+                    var cc = BASE_DATA[ii].categoriaContratual || '';
+                    for (var di = 0; di < meta.dbKeys.length; di++) {
+                        if (cc === meta.dbKeys[di]) { count++; break; }
+                    }
+                }
+                var equipHtml = '';
+                for (var ei = 0; ei < meta.equip.length; ei++) {
+                    equipHtml += '<li>' + meta.equip[ei] + '</li>';
+                }
+                var card = document.createElement('div');
+                card.className = 'cat-card';
+                card.style.cssText = '--cat-color:' + meta.color + ';--cat-bg:' + meta.color + '18;';
+                card.innerHTML = [
+                    '<div class="cat-card-header">',
+                    '<div class="cat-icon" style="background:' + meta.color + '20;color:' + meta.color + '">' + meta.abbr + '</div>',
+                    '<div><div class="cat-name">' + meta.label + '</div><div class="cat-count">' + count + ' PECAS</div></div>',
+                    '</div>',
+                    '<ul class="cat-equip-list">' + equipHtml + '</ul>',
+                    '<button class="cat-btn">VER PECAS</button>'
+                ].join('');
+                (function(n) {
+                    card.querySelector('.cat-btn').addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        openCategoryFilter(n);
+                    });
+                    card.addEventListener('click', function() { openCategoryFilter(n); });
+                })(name);
+                grid.appendChild(card);
+            }
+        }
+
+        function openCategoryFilter(groupName) {
+            currentCategoryGroup = groupName;
+            var meta = CATEGORY_META[groupName];
+            document.getElementById('categoryHomeView').classList.remove('active');
+            document.querySelector('.toolbar-wrapper').style.display = '';
+            document.querySelector('main').style.display = '';
+            var bb = document.getElementById('btnBackCategories');
+            if (bb) bb.classList.add('visible');
+            filterBrand.value = '';
+            filterCategory.value = '';
+            searchInput.value = '';
+            filterContract.value = '';
+            activeGroupKeys = meta.dbKeys;
+            contractChips.querySelectorAll('.chip').forEach(function(c) { c.classList.remove('active'); });
+            applyFilters();
+        }
+
+        function showCategoryHome() {
+            currentCategoryGroup = null;
+            activeGroupKeys = null;
+            document.getElementById('categoryHomeView').classList.add('active');
+            document.querySelector('.toolbar-wrapper').style.display = 'none';
+            document.querySelector('main').style.display = 'none';
+            var bb = document.getElementById('btnBackCategories');
+            if (bb) bb.classList.remove('visible');
+        }
+
 // Initialize
 function init() {
     loadCatalogState();
@@ -1351,6 +1656,9 @@ function init() {
     renderInitial();
     setupEventListeners();
     setupIntersectionObserver();
+    buildCategoryHome();
+    document.querySelector('.toolbar-wrapper').style.display = 'none';
+    document.querySelector('main').style.display = 'none';
 }
 
 // Theme
@@ -1464,7 +1772,13 @@ function applyFilters() {
 
     filteredData = BASE_DATA.filter(d => {
         if (showOnlyFavorites && !favorites.includes(d.codigo)) return false;
-        if (fCont && d.categoriaContratual !== fCont) return false;
+        if (activeGroupKeys && activeGroupKeys.length > 0) {
+                var _matched = false;
+                for (var _gi = 0; _gi < activeGroupKeys.length; _gi++) {
+                    if (d.categoriaContratual === activeGroupKeys[_gi]) { _matched = true; break; }
+                }
+                if (!_matched) return false;
+            } else if (fCont && d.categoriaContratual !== fCont) return false;
         if (fBra && d.marca !== fBra) return false;
         if (fCat && d.categoria !== fCat) return false;
         if (q) {
@@ -1485,6 +1799,10 @@ function onSearchInput() {
 
 // Rendering
 function renderInitial() {
+    if (currentCategoryGroup !== null || (activeGroupKeys && activeGroupKeys.length > 0)) {
+        document.querySelector('.toolbar-wrapper').style.display = '';
+        document.querySelector('main').style.display = '';
+    }
     catalogContainer.innerHTML = '';
     displayedCount = 0;
     renderNextPage();
@@ -1681,6 +1999,8 @@ function animateCount(element, start, end) {
 
 // Event Listeners
 function setupEventListeners() {
+    var _bb = document.getElementById('btnBackCategories');
+    if (_bb) _bb.addEventListener('click', showCategoryHome);
     themeToggle.onclick = toggleTheme;
     
     searchInput.addEventListener('input', onSearchInput);
