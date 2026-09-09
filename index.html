@@ -970,14 +970,179 @@
             .logo-text { font-size: 1rem; }
         }
 
+        
+        /* ===== DESIGN REFINADO WYNTECH 2026 ===== */
+        :root {
+            --login-bg: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+        }
+
+        /* LOGIN SCREEN */
+        #loginScreen {
+            position: fixed; inset: 0; z-index: 9999;
+            background: var(--login-bg);
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column; gap: 2rem;
+        }
+        #loginScreen.hidden { display: none; }
+        .login-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            width: 100%; max-width: 380px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+        .login-logo {
+            text-align: center; margin-bottom: 2rem;
+        }
+        .login-logo-text {
+            font-size: 1.6rem; font-weight: 800; letter-spacing: 0.08em;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .login-logo-sub {
+            font-size: 0.7rem; color: rgba(255,255,255,0.4);
+            letter-spacing: 0.15em; margin-top: 0.2rem;
+        }
+        .login-field { margin-bottom: 1rem; }
+        .login-field label {
+            display: block; font-size: 0.7rem; font-weight: 600;
+            letter-spacing: 0.1em; color: rgba(255,255,255,0.5);
+            margin-bottom: 0.4rem;
+        }
+        .login-field input {
+            width: 100%; padding: 0.8rem 1rem;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px; color: #fff;
+            font-size: 0.95rem; outline: none;
+            transition: border-color 0.2s;
+            box-sizing: border-box;
+        }
+        .login-field input:focus { border-color: #60a5fa; }
+        .login-field .pw-wrap { position: relative; }
+        .login-field .pw-wrap input { padding-right: 2.8rem; }
+        .login-field .pw-toggle {
+            position: absolute; right: 0.8rem; top: 50%; transform: translateY(-50%);
+            background: none; border: none; cursor: pointer;
+            color: rgba(255,255,255,0.4); padding: 0.3rem;
+        }
+        .login-error {
+            color: #f87171; font-size: 0.8rem; text-align: center;
+            min-height: 1.2rem; margin-bottom: 0.5rem;
+        }
+        .login-btn {
+            width: 100%; padding: 0.9rem;
+            background: linear-gradient(135deg, #3b82f6, #6366f1);
+            border: none; border-radius: 10px;
+            color: #fff; font-size: 0.9rem; font-weight: 700;
+            letter-spacing: 0.08em; cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        .login-btn:hover { opacity: 0.9; }
+        .login-btn:active { transform: scale(0.98); }
+
+        /* LOGOUT BUTTON no header */
+        #btnLogout {
+            display: none;
+            align-items: center; gap: 0.4rem;
+            font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em;
+            padding: 0.4rem 0.9rem; border-radius: 8px;
+            background: rgba(239,68,68,0.15);
+            border: 1px solid rgba(239,68,68,0.3);
+            color: #f87171; cursor: pointer;
+            transition: background 0.2s;
+        }
+        #btnLogout:hover { background: rgba(239,68,68,0.25); }
+
+        /* GALLERY MODAL STYLES */
+        .gallery-strip {
+            display: flex; gap: 0.5rem; flex-wrap: nowrap;
+            overflow-x: auto; padding: 0.75rem 0 0.25rem;
+            scrollbar-width: thin;
+        }
+        .gallery-thumb {
+            flex-shrink: 0; width: 64px; height: 64px;
+            border-radius: 8px; overflow: hidden;
+            border: 2px solid transparent;
+            cursor: pointer; transition: border-color 0.2s, transform 0.15s;
+            position: relative;
+        }
+        .gallery-thumb.active { border-color: #3b82f6; }
+        .gallery-thumb:hover { transform: scale(1.05); }
+        .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .gallery-thumb .thumb-del {
+            position: absolute; top: 2px; right: 2px;
+            width: 18px; height: 18px; border-radius: 50%;
+            background: rgba(239,68,68,0.85); border: none;
+            color: #fff; font-size: 10px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.15s;
+        }
+        .gallery-thumb:hover .thumb-del { opacity: 1; }
+        .gallery-add-btn {
+            flex-shrink: 0; width: 64px; height: 64px;
+            border-radius: 8px; border: 2px dashed rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.04);
+            cursor: pointer; display: flex; align-items: center;
+            justify-content: center; font-size: 1.4rem;
+            color: rgba(255,255,255,0.3); transition: all 0.2s;
+        }
+        .gallery-add-btn:hover {
+            border-color: #3b82f6; color: #3b82f6;
+            background: rgba(59,130,246,0.08);
+        }
+
+        /* CLEAN CARD DESIGN */
+        .card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+        }
+        .card:hover {
+            transform: translateY(-3px) !important;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important;
+        }
+
+        /* CLEANER HEADER */
+        .header {
+            border-bottom: 1px solid var(--border) !important;
+            backdrop-filter: none !important;
+        }
+
         </style>
 </head>
 <body>
+    <!-- ===== TELA DE LOGIN ===== -->
+    <div id="loginScreen">
+        <div class="login-card">
+            <div class="login-logo">
+                <div class="login-logo-text">WYNTECH</div>
+                <div class="login-logo-sub">CATÁLOGO DE PEÇAS — ACESSO RESTRITO</div>
+            </div>
+            <div class="login-field">
+                <label>USUÁRIO</label>
+                <input type="text" id="loginUser" placeholder="Digite seu usuário" autocomplete="username">
+            </div>
+            <div class="login-field">
+                <label>SENHA</label>
+                <div class="pw-wrap">
+                    <input type="password" id="loginPass" placeholder="Digite sua senha" autocomplete="current-password">
+                    <button class="pw-toggle" id="pwToggle" type="button" title="Mostrar/ocultar senha">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="login-error" id="loginError"></div>
+            <button class="login-btn" id="loginBtn">ENTRAR</button>
+        </div>
+    </div>
+
 
     <div id="scrollProgress"></div>
 
     <div class="hero">
-        <canvas id="particles"></canvas>
         <div class="header-content">
             <div class="logo-area">
                 <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -1265,15 +1430,19 @@ function compressImage(file, callback) {
     reader.readAsDataURL(file);
 }
 
-function savePhotoOverride(codigo, img, temFoto) {
-    try {
-        const overrides = JSON.parse(localStorage.getItem('wyntech_photo_overrides') || '{}');
-        overrides[codigo] = { img: img, temFoto: temFoto };
-        localStorage.setItem('wyntech_photo_overrides', JSON.stringify(overrides));
-    } catch (err) {
-        console.error('Erro ao salvar foto no localStorage:', err);
+function savePhotoOverride(codigo, imgs, temFoto) {
+        // imgs can be an array or a single string (legacy)
+        let imgsArr = Array.isArray(imgs) ? imgs : (imgs && imgs.length > 50 ? [imgs] : []);
+        try {
+            const overrides = JSON.parse(localStorage.getItem('wyntech_photo_overrides') || '{}');
+            overrides[codigo] = { imgs: imgsArr, temFoto: temFoto };
+            localStorage.setItem('wyntech_photo_overrides', JSON.stringify(overrides));
+        } catch(e) {
+            console.warn('localStorage quota exceeded:', e);
+        }
     }
-}
+
+    
 
 function saveNewItemState(newItem) {
     try {
@@ -1286,65 +1455,155 @@ function saveNewItemState(newItem) {
 }
 
 function loadCatalogState() {
-    try {
-        // 1. Restore newly created items
-        const newItems = JSON.parse(localStorage.getItem('wyntech_new_items') || '[]');
-        if (Array.isArray(newItems) && newItems.length > 0) {
-            // Avoid duplicate additions if already present
+        // Load photo overrides (multi-photo format)
+        try {
+            const overrides = JSON.parse(localStorage.getItem('wyntech_photo_overrides') || '{}');
+            for (const [codigo, data] of Object.entries(overrides)) {
+                const idx = BASE_DATA.findIndex(i => i.codigo === codigo);
+                if (idx !== -1) {
+                    // Support legacy single img format
+                    if (data.imgs && Array.isArray(data.imgs)) {
+                        BASE_DATA[idx].imgs = data.imgs;
+                        BASE_DATA[idx].img = data.imgs[0] || '';
+                    } else if (data.img) {
+                        BASE_DATA[idx].imgs = [data.img];
+                        BASE_DATA[idx].img = data.img;
+                    }
+                    BASE_DATA[idx].temFoto = data.temFoto || (BASE_DATA[idx].imgs && BASE_DATA[idx].imgs.length > 0);
+                }
+            }
+        } catch(e) {}
+
+        // Load new items
+        try {
+            const newItems = JSON.parse(localStorage.getItem('wyntech_new_items') || '[]');
             newItems.forEach(item => {
-                if (!BASE_DATA.some(d => d.codigo === item.codigo)) {
+                if (!BASE_DATA.find(i => i.codigo === item.codigo)) {
+                    if (!item.imgs) item.imgs = item.img ? [item.img] : [];
                     BASE_DATA.unshift(item);
                 }
             });
-        }
+        } catch(e) {}
 
-        // 2. Restore photo overrides
-        const photoOverrides = JSON.parse(localStorage.getItem('wyntech_photo_overrides') || '{}');
-        for (const codigo in photoOverrides) {
-            const override = photoOverrides[codigo];
-            const idx = BASE_DATA.findIndex(d => d.codigo === codigo);
-            if (idx !== -1) {
-                BASE_DATA[idx].img = override.img;
-                BASE_DATA[idx].temFoto = override.temFoto;
+        // Ensure all items have imgs array
+        BASE_DATA.forEach(item => {
+            if (!item.imgs) {
+                item.imgs = (item.img && item.img.length > 50) ? [item.img] : [];
+            }
+        });
+    }
+
+    
+
+    // ===== SISTEMA DE LOGIN =====
+    const LOGIN_USER = "Wyntech_2026";
+    const LOGIN_PASS = "Wyn@2026";
+    const SESSION_KEY = "wyntech_session_ok";
+
+    function checkSession() {
+        return sessionStorage.getItem(SESSION_KEY) === "1";
+    }
+
+    function doLogin() {
+        const u = document.getElementById('loginUser').value.trim();
+        const p = document.getElementById('loginPass').value;
+        const err = document.getElementById('loginError');
+        if (u === LOGIN_USER && p === LOGIN_PASS) {
+            sessionStorage.setItem(SESSION_KEY, "1");
+            document.getElementById('loginScreen').classList.add('hidden');
+            const lb = document.getElementById('btnLogout');
+            if (lb) lb.style.display = 'inline-flex';
+            err.textContent = '';
+        } else {
+            err.textContent = 'Usuario ou senha incorretos.';
+            document.getElementById('loginPass').value = '';
+        }
+    }
+
+    function doLogout() {
+        sessionStorage.removeItem(SESSION_KEY);
+        location.reload();
+    }
+
+    function initLogin() {
+        if (checkSession()) {
+            const ls = document.getElementById('loginScreen');
+            if (ls) ls.classList.add('hidden');
+            const lb = document.getElementById('btnLogout');
+            if (lb) lb.style.display = 'inline-flex';
+            return;
+        }
+        // Show login screen
+        const ls = document.getElementById('loginScreen');
+        if (ls) ls.classList.remove('hidden');
+
+        const passInp = document.getElementById('loginPass');
+        const userInp = document.getElementById('loginUser');
+        const btn = document.getElementById('loginBtn');
+        const pwt = document.getElementById('pwToggle');
+
+        if (passInp) passInp.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+        if (userInp) userInp.addEventListener('keydown', e => { if (e.key === 'Enter' && passInp) passInp.focus(); });
+        if (btn) btn.addEventListener('click', doLogin);
+        if (pwt) pwt.addEventListener('click', () => {
+            if (passInp) passInp.type = passInp.type === 'password' ? 'text' : 'password';
+        });
+    }
+
+    // ===== GALERIA DE MULTIPLAS FOTOS =====
+    let galleryFileInput = null;
+
+    function triggerGalleryUpload(item) {
+        if (!galleryFileInput) {
+            galleryFileInput = document.createElement('input');
+            galleryFileInput.type = 'file';
+            galleryFileInput.accept = 'image/*';
+            galleryFileInput.style.display = 'none';
+            document.body.appendChild(galleryFileInput);
+        }
+        galleryFileInput.onchange = async function() {
+            const file = galleryFileInput.files[0];
+            if (!file) return;
+            const compressed = await compressImage(file);
+            if (!item.imgs) item.imgs = (item.img && item.img.length > 50) ? [item.img] : [];
+            item.imgs.push(compressed);
+            item.img = item.imgs[0];
+            item.temFoto = true;
+            savePhotoOverride(item.codigo, item.imgs, true);
+            renderGalleryStrip(item.imgs, item);
+            const cont = document.getElementById('modalImgContainer');
+            if (cont) cont.innerHTML = '<img src="' + item.imgs[0] + '" alt="' + item.nome + '" id="detailImg" style="cursor:zoom-in;" onclick="document.getElementById(\'fsImg\').src=this.src;document.getElementById(\'fsOverlay\').classList.add(\'active\')">';
+            showToast('FOTO ADICIONADA!', 'success');
+            galleryFileInput.value = '';
+        };
+        galleryFileInput.click();
+    }
+
+    function removeGalleryPhoto(codigo, idx, e) {
+        if (e) e.stopPropagation();
+        const item = BASE_DATA.find(function(i) { return i.codigo === codigo; });
+        if (!item || !item.imgs) return;
+        item.imgs.splice(idx, 1);
+        item.img = item.imgs.length > 0 ? item.imgs[0] : '';
+        item.temFoto = item.imgs.length > 0;
+        savePhotoOverride(codigo, item.imgs, item.temFoto);
+        renderGalleryStrip(item.imgs, item);
+        const cont = document.getElementById('modalImgContainer');
+        if (cont) {
+            if (item.imgs.length > 0) {
+                cont.innerHTML = '<img src="' + item.imgs[0] + '" alt="' + item.nome + '" id="detailImg" style="cursor:zoom-in;" onclick="document.getElementById(\'fsImg\').src=this.src;document.getElementById(\'fsOverlay\').classList.add(\'active\')">';
+            } else {
+                cont.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted)"><svg viewBox="0 0 24 24" style="width:64px;height:64px;opacity:0.2;stroke:currentColor;fill:none;stroke-width:1.5"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/></svg></div>';
             }
         }
-    } catch (e) {
-        console.error('Erro ao carregar do localStorage:', e);
+        showToast('FOTO REMOVIDA', 'info');
     }
-}
 
-// STATE
-let filteredData = [];
-let displayedCount = 0;
-const PAGE_SIZE = 60;
-let isAdmin = false;
-let currentDetailItem = null;
-let viewMode = 'grid'; // 'grid' or 'list'
-let favorites = JSON.parse(localStorage.getItem('wyntech_favorites')) || [];
-let showOnlyFavorites = false;
-let tempNewItemImgData = '';
 
-// DOM Elements
-const catalogContainer = document.getElementById('catalogContainer');
-const searchInput = document.getElementById('searchInput');
-const filterContract = document.getElementById('filterContract');
-const filterBrand = document.getElementById('filterBrand');
-const filterCategory = document.getElementById('filterCategory');
-const contractChips = document.getElementById('contractChips');
-const totalCountEl = document.getElementById('totalCount');
-const visibleCountEl = document.getElementById('visibleCount');
-const sentinel = document.getElementById('sentinel');
-const themeToggle = document.getElementById('themeToggle');
-const toast = document.getElementById('toast');
-const toastMsg = document.getElementById('toastMsg');
-const scrollTopBtn = document.getElementById('scrollTopBtn');
-const scrollProgress = document.getElementById('scrollProgress');
-
-// Initialize
 function init() {
+        initLogin();
     loadCatalogState();
     initTheme();
-    initParticles();
     populateFilters();
     filteredData = [...BASE_DATA];
     animateCount(totalCountEl, 0, BASE_DATA.length);
@@ -1380,48 +1639,7 @@ function updateThemeIcon(theme) {
 }
 
 // Particles
-function initParticles() {
-    const canvas = document.getElementById('particles');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = canvas.parentElement.offsetHeight;
 
-    const particles = [];
-    for (let i = 0; i < 30; i++) {
-        particles.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            r: Math.random() * 2 + 1,
-            dx: (Math.random() - 0.5) * 0.5,
-            dy: (Math.random() - 0.5) * 0.5
-        });
-    }
-
-    function animate() {
-        requestAnimationFrame(animate);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = document.documentElement.getAttribute('data-theme') === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(239, 68, 68, 0.2)';
-        
-        particles.forEach(p => {
-            p.x += p.dx;
-            p.y += p.dy;
-            if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-            if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
-            
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fill();
-        });
-    }
-    animate();
-
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = canvas.parentElement.offsetHeight;
-    });
-}
-
-// Filters
 function getUnique(arr, key) {
     return [...new Set(arr.map(i => i[key]))].filter(Boolean).sort();
 }
@@ -1582,8 +1800,11 @@ function showDetail(item) {
     currentDetailItem = item;
     const body = document.getElementById('detailModalBody');
     
-    const imgHtml = item.temFoto && item.img && item.img.length > 50 
-            ? `<img src="${item.img}" alt="${item.nome}" id="detailImg">`
+    const itemImgs = (item.imgs && item.imgs.length > 0) ? item.imgs :
+                       (item.img && item.img.length > 50 ? [item.img] : []);
+    const mainImg = itemImgs[0] || '';
+    const imgHtml = mainImg
+            ? `<img src="${mainImg}" alt="${item.nome}" id="detailImg" style="cursor:zoom-in;" onclick="document.getElementById('fsImg').src=this.src;document.getElementById('fsOverlay').classList.add('active')">`
             : `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted);"><svg class="icon" viewBox="0 0 24 24" style="width:64px;height:64px;opacity:0.2;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg></div>`;
 
     let infoHtml = '';
@@ -1620,23 +1841,19 @@ function showDetail(item) {
     }
 
     body.innerHTML = `
-        <div class="modal-img-container" id="modalImgContainer">
+        <div class="modal-img-container" id="modalImgContainer" style="position:relative;">
             ${imgHtml}
         </div>
         <div class="modal-info">
             ${infoHtml}
+            <div class="gallery-strip" id="galleryStrip"></div>
         </div>
     `;
 
     document.getElementById('detailModal').classList.add('active');
 
-    const imgContainer = document.getElementById('modalImgContainer');
-    if (item.temFoto && item.img && item.img.length > 50) {
-        imgContainer.onclick = () => {
-            document.getElementById('fsImg').src = item.img;
-            document.getElementById('fsOverlay').classList.add('active');
-        };
-    }
+    // Render gallery strip
+    renderGalleryStrip(itemImgs, item);
 
     // Photo control buttons visibility
     const btnChangePhotoText = document.getElementById('btnChangePhotoText');
